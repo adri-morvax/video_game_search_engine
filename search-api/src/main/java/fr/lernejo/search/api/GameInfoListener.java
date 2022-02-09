@@ -17,7 +17,7 @@ public class GameInfoListener {
         this.client = client;
     }
 
-    @RabbitListener(queues = AmqpConfiguration.GAME_INFO_QUEUE)
+    @RabbitListener(queues = "game_info")
     public void onMessage(String document,@Header("game_id") String id) throws IOException {
         IndexRequest request = new IndexRequest("games").id(id).source(document, XContentType.JSON);
         this.client.index(request, RequestOptions.DEFAULT);
